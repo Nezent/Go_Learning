@@ -24,6 +24,16 @@ func main() {
 	// var anon person
 	// anon.firstName = "Anon"
 	// anon.lastName = "Anderson"
-	fmt.Println(anon)
-	fmt.Printf("%+v",anon)
+	anonPointer := &anon
+	anonPointer.updateName("Anonymous")
+	anon.print()
+}
+
+func (p *person) updateName(firstName string) {
+	(*p).firstName = firstName
+}
+
+func (p person) print() {
+	fmt.Println(p)
+	fmt.Printf("%+v",p)
 }
