@@ -1,39 +1,27 @@
 package main
 
-import "fmt"
-
-type contactInfo struct {
-	email string
-	zip int
-}
-
-type person struct {
-	firstName string
-	lastName  string
-	contact contactInfo
-}
+import (
+	"fmt"
+	"net/http"
+)
 
 func main() {
-	anon := person{firstName: "Anon", 
-					lastName: "Anderson",
-					contact: contactInfo{
-						email: "sirajummunir31@gmail.com",
-						zip: 1171,
-					},
-				}
-	// var anon person
-	// anon.firstName = "Anon"
-	// anon.lastName = "Anderson"
-	anonPointer := &anon
-	anonPointer.updateName("Anonymous")
-	anon.print()
+	links := []string{
+		"http://facebook.com",
+		"http://amazon.com",
+		"http://google.com",
+		"http://golang.org",
+	}
+	for _, link := range links {
+		checkLink(link)
+	}
 }
 
-func (p *person) updateName(firstName string) {
-	(*p).firstName = firstName
-}
-
-func (p person) print() {
-	fmt.Println(p)
-	fmt.Printf("%+v",p)
+func checkLink(link string) {
+	_, err := http.Get(link)
+	if err != nil {
+		fmt.Println(link,"might be down!")
+		return
+	}
+	fmt.Println(link,"is up!")
 }
